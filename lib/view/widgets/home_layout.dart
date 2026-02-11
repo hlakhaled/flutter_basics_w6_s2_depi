@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basics/view/cart_view.dart';
 import 'package:flutter_basics/view/home_view.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -13,7 +14,7 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   final List<Widget> pages = const [
     HomeView(),
-    Center(child: Text('Cart Page')),
+    CartView(),
     Center(child: Text('Profile Page')),
   ];
 

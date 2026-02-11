@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_basics/core/utils/constants/styles.dart';
-import 'package:flutter_basics/data/models/special_offer_model.dart';
+import 'package:flutter_basics/data/models/food_model.dart';
+import 'package:flutter_basics/view/food_details_view.dart';
 
 class FoodItemCard extends StatelessWidget {
-  final SpecialOfferModel model;
+  final FoodModel model;
 
   const FoodItemCard({super.key, required this.model});
 
@@ -28,36 +29,58 @@ class FoodItemCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 5,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: const Color(0xFFFFEBEE),
-                  image: DecorationImage(
-                    image: AssetImage(model.imagePath),
-                    fit: BoxFit.cover,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FoodDetailsView(foodModel: model),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: const Color(0xFFFFEBEE),
+                    image: DecorationImage(
+                      image: AssetImage(model.imagePath),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
             ),
-
             const SizedBox(height: 8),
 
-            Text(
-              model.title,
-              style: Styles.style14Bold,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FoodDetailsView(foodModel: model),
+                  ),
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    model.title,
+                    style: Styles.style14Bold,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    model.label,
+                    style: Styles.style14Regular,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 14),
+                ],
+              ),
             ),
-
-            Text(
-              model.label,
-              style: Styles.style14Regular,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-
-            SizedBox(height: 14),
 
             Container(
               height: 36,
