@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_basics/core/utils/constants/styles.dart';
-import 'package:flutter_basics/data/models/food_info_model.dart';
+import 'package:flutter_basics/data/models/card_info_model.dart';
 
 class FoodInfoCard extends StatelessWidget {
-  const FoodInfoCard({super.key, required this.foodInfoModel});
-  final FoodInfoModel foodInfoModel;
+  const FoodInfoCard({super.key, required this.cardInfoModel});
+  final CardInfoModel cardInfoModel;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,16 +17,16 @@ class FoodInfoCard extends StatelessWidget {
       child: Column(
         children: [
           Icon(
-            foodInfoModel.icon,
-            color: foodInfoModel.icon == Icons.star_rate_rounded
+            cardInfoModel.icon,
+            color: cardInfoModel.icon == Icons.star_rate_rounded
                 ? Colors.yellow[600]
                 : Colors.red[600],
             size: 24,
           ),
           SizedBox(height: 8),
-          Text(foodInfoModel.value, style: Styles.style16Bold),
+          Text(cardInfoModel.value, style: Styles.style16Bold),
           SizedBox(height: 4),
-          Text(foodInfoModel.label, style: Styles.style10SemiBold),
+          Text(cardInfoModel.label, style: Styles.style10SemiBold),
         ],
       ),
     );

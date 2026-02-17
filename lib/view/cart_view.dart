@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_basics/core/utils/constants/styles.dart';
-import 'package:flutter_basics/view/custom_button.dart';
+import 'package:flutter_basics/view/widgets/custom_button.dart';
 import 'package:flutter_basics/view/widgets/cart_item_list.dart';
 import 'package:flutter_basics/view/widgets/cart_restaurant_item.dart';
 import 'package:flutter_basics/view/widgets/cart_summary_section.dart';

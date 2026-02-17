@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_basics/controller/cart_items_controller.dart';
 import 'package:flutter_basics/core/utils/constants/styles.dart';
 import 'package:flutter_basics/data/models/food_model.dart';
 import 'package:flutter_basics/view/food_details_view.dart';
@@ -82,16 +84,25 @@ class FoodItemCard extends StatelessWidget {
               ),
             ),
 
-            Container(
-              height: 36,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFEBEE),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                "Add to cart",
-                style: Styles.style12Medium.copyWith(color: Colors.black),
+            InkWell(
+              onTap: () {
+                context.read<CartItemsController>().addToCart(model);
+             
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Item added to cart')),
+                );
+              },
+              child: Container(
+                height: 36,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFEBEE),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  "Add to cart",
+                  style: Styles.style12Medium.copyWith(color: Colors.black),
+                ),
               ),
             ),
           ],

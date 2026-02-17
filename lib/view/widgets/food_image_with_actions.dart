@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basics/controller/cart_items_controller.dart';
+import 'package:flutter_basics/data/models/food_model.dart';
 import 'package:flutter_basics/view/widgets/action_icon.dart';
+import 'package:provider/provider.dart';
 
-class FoodImageWithActions extends StatefulWidget {
-  const FoodImageWithActions({super.key, required this.imgPath});
+class FoodImageWithActions extends StatelessWidget {
+  const FoodImageWithActions({super.key, required this.foodModel});
 
-  final String imgPath;
-
-  @override
-  State<FoodImageWithActions> createState() => _FoodImageWithActionsState();
-}
-
-class _FoodImageWithActionsState extends State<FoodImageWithActions> {
-  bool isFavorite = false;
+  final FoodModel foodModel;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +18,7 @@ class _FoodImageWithActionsState extends State<FoodImageWithActions> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             image: DecorationImage(
-              image: AssetImage(widget.imgPath),
+              image: AssetImage(foodModel.imagePath),
               fit: BoxFit.cover,
             ),
           ),
@@ -40,15 +36,22 @@ class _FoodImageWithActionsState extends State<FoodImageWithActions> {
                 },
               ),
               const Spacer(),
-              ActionIcon(
-                icon: isFavorite
-                    ? Icons.favorite
-                    : Icons.favorite_border_outlined,
-                onPressed: () {
-                  setState(() {
-                    isFavorite = !isFavorite;
-                  });
-                },
+              Consumer<CartItemsController>(
+                builder:
+                    (
+                      BuildContext context,
+                      CartItemsController value,
+                      Widget? child,
+                    ) {
+                      return ActionIcon(
+                        icon: foodModel.isFavorite
+                            ? Icons.favorite
+                            : Icons.favorite_border_outlined,
+                        onPressed: () {
+                          value.favoriteItem(foodModel);
+                        },
+                      );
+                    },
               ),
             ],
           ),

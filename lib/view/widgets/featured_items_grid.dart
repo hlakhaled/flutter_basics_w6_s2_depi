@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_basics/data/constants/featured_foods.dart';
+import 'package:flutter_basics/data/models/food_model.dart';
 import 'package:flutter_basics/view/widgets/food_card.dart';
 
 class FeaturedItemsGrid extends StatelessWidget {
@@ -17,9 +16,9 @@ class FeaturedItemsGrid extends StatelessWidget {
         crossAxisSpacing: 16,
         childAspectRatio: 0.75,
       ),
-      itemCount: featuredFoods.length,
+      itemCount: FoodModel.featuredFoods.length,
       itemBuilder: (context, index) {
-        return FoodItemCard(model: featuredFoods[index]);
+        return FoodItemCard(model: FoodModel.featuredFoods[index]);
       },
     );
   }

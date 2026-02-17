@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basics/controller/cart_items_controller.dart';
 import 'package:flutter_basics/core/utils/constants/styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartRestaurantItem extends StatelessWidget {
   const CartRestaurantItem({super.key});
@@ -18,7 +20,7 @@ class CartRestaurantItem extends StatelessWidget {
       ),
       title: Text("Burger Palace", style: Styles.style16SemiBold),
       subtitle: Text(
-        "2 Items",
+        "${context.read<CartItemsController>().cartItems.length} Items",
         style: Styles.style12Regular.copyWith(color: Colors.grey[600]),
       ),
     );

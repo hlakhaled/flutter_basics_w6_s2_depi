@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_basics/data/constants/featured_foods.dart';
+import 'package:flutter_basics/data/models/food_model.dart';
 import 'package:flutter_basics/view/widgets/food_card.dart';
 
 class FeaturedItemsList extends StatelessWidget {
@@ -11,11 +11,11 @@ class FeaturedItemsList extends StatelessWidget {
       height: 300,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: featuredFoods.length,
+        itemCount: FoodModel.featuredFoods.length,
         padding: const EdgeInsets.symmetric(horizontal: 4),
         separatorBuilder: (_, _) => const SizedBox(width: 16),
         itemBuilder: (context, index) {
-          return FoodItemCard(model: featuredFoods[index]);
+          return FoodItemCard(model: FoodModel.featuredFoods[index]);
         },
       ),
     );

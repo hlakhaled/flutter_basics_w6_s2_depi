@@ -1,45 +1,40 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_basics/controller/cart_items_controller.dart';
 import 'package:flutter_basics/core/utils/constants/styles.dart';
-import 'package:flutter_basics/data/models/cart_item_model.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_basics/data/models/food_model.dart';
 
-class CartItemTile extends StatefulWidget {
+class CartItemTile extends StatelessWidget {
   const CartItemTile({super.key, required this.cartItemModel});
 
-  final CartItemModel cartItemModel;
-
-  @override
-  State<CartItemTile> createState() => _CartItemTileState();
-}
-
-class _CartItemTileState extends State<CartItemTile> {
-  int quantity = 1;
+  final FoodModel cartItemModel;
 
   @override
   Widget build(BuildContext context) {
+    final cartController = context.read<CartItemsController>();
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Image.asset(
-          widget.cartItemModel.imageUrl,
+          cartItemModel.imagePath,
           width: 60,
           height: 60,
           fit: BoxFit.cover,
         ),
       ),
 
-      title: Text(widget.cartItemModel.title, style: Styles.style16SemiBold),
+      title: Text(cartItemModel.title, style: Styles.style16SemiBold),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 8),
           Text(
-            "Size: ${widget.cartItemModel.size}",
+            "Size: ${cartItemModel.size}",
             style: Styles.style12Regular.copyWith(color: Colors.grey[600]),
           ),
           Text(
-            widget.cartItemModel.description,
+            "Burger Palace",
             style: Styles.style12Regular.copyWith(color: Colors.red[600]),
           ),
         ],
@@ -56,16 +51,14 @@ class _CartItemTileState extends State<CartItemTile> {
             child: IconButton(
               icon: Icon(Icons.remove, size: 18, color: Colors.grey[600]),
               onPressed: () {
-                setState(() {
-                  if (quantity > 1) {
-                    quantity--;
-                  }
-                });
+                if (cartItemModel.quantity > 1) {
+                  cartController.decreaseQuantity(cartItemModel);
+                }
               },
             ),
           ),
           SizedBox(width: 16),
-          Text("$quantity", style: Styles.style16SemiBold),
+          Text("${cartItemModel.quantity}", style: Styles.style16SemiBold),
           SizedBox(width: 16),
           Container(
             decoration: BoxDecoration(
@@ -75,9 +68,7 @@ class _CartItemTileState extends State<CartItemTile> {
             child: IconButton(
               icon: Icon(Icons.add, size: 18, color: Colors.grey[600]),
               onPressed: () {
-                setState(() {
-                  quantity++;
-                });
+                cartController.increaseQuantity(cartItemModel);
               },
             ),
           ),
