@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_basics/controller/cart_items_controller.dart';
+import 'package:flutter_basics/blocs/cart_items_cubit/cart_items_cubit.dart';
 import 'package:flutter_basics/core/utils/constants/styles.dart';
 import 'package:flutter_basics/data/models/food_model.dart';
 import 'package:flutter_basics/view/food_details_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FoodItemCard extends StatelessWidget {
   final FoodModel model;
@@ -86,7 +86,7 @@ class FoodItemCard extends StatelessWidget {
 
             InkWell(
               onTap: () {
-                context.read<CartItemsController>().addToCart(model);
+                context.read<CartItemsCubit>().addToCart(model);
              
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Item added to cart')),

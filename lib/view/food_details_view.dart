@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_basics/controller/cart_items_controller.dart';
+import 'package:flutter_basics/blocs/cart_items_cubit/cart_items_cubit.dart';
 import 'package:flutter_basics/data/models/food_model.dart';
 import 'package:flutter_basics/view/widgets/custom_button.dart';
 import 'package:flutter_basics/view/widgets/food_description_section.dart';
@@ -33,7 +33,7 @@ class FoodDetailsView extends StatelessWidget {
                 IngredientsSection(),
                 InkWell(
                   onTap: () =>
-                      context.read<CartItemsController>().addToCart(foodModel),
+                      context.read<CartItemsCubit>().addToCart(foodModel),
                   child: CustomButton(text: "Add to Cart"),
                 ),
               ],

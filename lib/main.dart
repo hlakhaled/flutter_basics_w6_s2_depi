@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_basics/controller/cart_items_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_basics/blocs/cart_items_cubit/cart_items_cubit.dart';
 import 'package:flutter_basics/view/widgets/home_layout.dart';
 
 void main() {
@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CartItemsController(),
+    return BlocProvider(
+      create: (context) => CartItemsCubit(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

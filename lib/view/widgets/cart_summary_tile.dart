@@ -1,32 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_basics/controller/cart_items_controller.dart';
+import 'package:flutter_basics/blocs/cart_items_cubit/cart_items_cubit.dart';
 import 'package:flutter_basics/core/utils/constants/styles.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartSummaryTile extends StatelessWidget {
-  const CartSummaryTile({super.key, required this.title});
+  const CartSummaryTile({
+    super.key,
+    required this.title,
+  });
+
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<CartItemsController>(context, listen: true);
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      minTileHeight: 0,
-      minVerticalPadding: 4,
+    return BlocBuilder<CartItemsCubit, CartItemsState>(
+      builder: (context, state) {
+        if (state is! CartItemsLoaded) {
+          return const SizedBox.shrink();
+        }
 
-      title: Text(
-        title,
-        style: Styles.style16Medium.copyWith(color: Colors.grey),
-      ),
-      trailing: Text(
-        title == "SubTotal"
-            ? "\$${controller.subTotal.toStringAsFixed(2)}"
-            : title == "Delivery Fee"
-            ? "\$${controller.deliveryFee.toStringAsFixed(2)}"
-            : "\$${controller.taxes.toStringAsFixed(2)}",
-        style: Styles.style16Medium,
-      ),
+        double value;
+
+        switch (title) {
+          case "SubTotal":
+            value = state.subTotal;
+            break;
+          case "Delivery Fee":
+            value = state.deliveryFee;
+            break;
+          case "Taxes":
+            value = state.taxes;
+            break;
+          default:
+            value = 0;
+        }
+
+        return ListTile(
+          contentPadding: EdgeInsets.zero,
+          minTileHeight: 0,
+          minVerticalPadding: 4,
+          title: Text(
+            title,
+            style: Styles.style16Medium.copyWith(color: Colors.grey),
+          ),
+          trailing: Text(
+            "\$${value.toStringAsFixed(2)}",
+            style: Styles.style16Medium,
+          ),
+        );
+      },
     );
   }
 }

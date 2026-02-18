@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_basics/controller/cart_items_controller.dart';
+import 'package:flutter_basics/blocs/cart_items_cubit/cart_items_cubit.dart';
 import 'package:flutter_basics/core/utils/constants/styles.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_basics/data/models/food_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartItemTile extends StatelessWidget {
   const CartItemTile({super.key, required this.cartItemModel});
@@ -11,7 +11,7 @@ class CartItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartController = context.read<CartItemsController>();
+    final cartController = context.read<CartItemsCubit>();
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: ClipRRect(
