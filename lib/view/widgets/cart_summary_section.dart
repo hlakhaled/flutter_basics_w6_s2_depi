@@ -11,7 +11,7 @@ class CartSummarySection extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CartItemsCubit, CartItemsState>(
       builder: (context, state) {
-        if (state is! CartItemsLoaded) {
+        if (state.cartItems.isEmpty) {
           return const SizedBox.shrink();
         }
 

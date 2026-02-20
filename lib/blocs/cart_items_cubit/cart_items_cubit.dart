@@ -1,49 +1,56 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_basics/data/models/food_model.dart';
-import 'package:meta/meta.dart';
 
 part 'cart_items_state.dart';
 
 class CartItemsCubit extends Cubit<CartItemsState> {
-  CartItemsCubit() : super(const CartItemsInitial());
+  CartItemsCubit() : super(CartItemsState.initial());
 
-  final List<FoodModel> _cartItems = [];
-
-  List<FoodModel> get cartItems => List.unmodifiable(_cartItems);
-
+  int get cartItemsCount => state.cartItems.length;
   void addToCart(FoodModel item) {
-    if (!_cartItems.contains(item)) {
-      _cartItems.add(item);
+    List<FoodModel> cartItems = List.from(state.cartItems);
+    if (!cartItems.contains(item)) {
+      cartItems.add(item);
     }
-    _emitLoadedState();
+    _updateCart(cartItems);
   }
 
   void removeFromCart(FoodModel item) {
-    _cartItems.remove(item);
-    _emitLoadedState();
+    List<FoodModel> cartItems = List.from(state.cartItems);
+    cartItems.remove(item);
+    _updateCart(cartItems);
   }
 
   void increaseQuantity(FoodModel item) {
-    item.quantity++;
-    _emitLoadedState();
+    List<FoodModel> cartItems = List.from(state.cartItems);
+    int index = cartItems.indexOf(item);
+    cartItems[index].quantity++;
+    _updateCart(cartItems);
   }
 
   void decreaseQuantity(FoodModel item) {
-    if (item.quantity > 1) {
-      item.quantity--;
-      _emitLoadedState();
+    List<FoodModel> cartItems = List.from(state.cartItems);
+    int index = cartItems.indexOf(item);
+    if (cartItems[index].quantity > 1) {
+      cartItems[index].quantity--;
+      _updateCart(cartItems);
     }
   }
 
-  void _emitLoadedState() {
-    final subTotal = _calculateSubTotal();
-    final deliveryFee = subTotal > 200 ? 0.0 : 20.0;
-    final taxes = subTotal * 0.14;
-    final total = subTotal + deliveryFee + taxes;
+  void _updateCart(List<FoodModel> cartItems) {
+    double subTotal = 0;
+
+    for (var item in cartItems) {
+      subTotal += item.price * item.quantity;
+    }
+
+    double deliveryFee = subTotal > 200 ? 0 : 20;
+    double taxes = subTotal * 0.14;
+    double total = subTotal + deliveryFee + taxes;
 
     emit(
-      CartItemsLoaded(
-        cartItems: List.unmodifiable(_cartItems),
+      state.copyWith(
+        cartItems: cartItems,
         subTotal: subTotal,
         deliveryFee: deliveryFee,
         taxes: taxes,
@@ -52,15 +59,21 @@ class CartItemsCubit extends Cubit<CartItemsState> {
     );
   }
 
-  double _calculateSubTotal() {
-    double total = 0;
-    for (var item in _cartItems) {
-      total += item.price * item.quantity;
-    }
-    return total;
-  }
   void favoriteItem(FoodModel item) {
-    item.isFavorite = !item.isFavorite;
-    _emitLoadedState();
+    List<String> ids = List.from(state.ids);
+    if (state.ids.contains(item.id)) {
+      ids.remove(item.id);
+      emit(state.copyWith(ids: ids));
+    } else {
+      ids.add(item.id);
+      emit(state.copyWith(ids: ids));
+    }
+  }
+
+  bool isFavourite(FoodModel item) {
+    if (state.ids.contains(item.id)) {
+      return true;
+    }
+    return false;
   }
 }

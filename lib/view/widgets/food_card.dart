@@ -33,6 +33,7 @@ class FoodItemCard extends StatelessWidget {
             Expanded(
               child: InkWell(
                 onTap: () {
+                  
                   Navigator.push(
                     context,
                     MaterialPageRoute(

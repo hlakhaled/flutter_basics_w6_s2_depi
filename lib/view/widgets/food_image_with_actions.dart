@@ -3,7 +3,7 @@ import 'package:flutter_basics/blocs/cart_items_cubit/cart_items_cubit.dart';
 import 'package:flutter_basics/data/models/food_model.dart';
 import 'package:flutter_basics/view/widgets/action_icon.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
+
 
 class FoodImageWithActions extends StatelessWidget {
   const FoodImageWithActions({super.key, required this.foodModel});
@@ -40,7 +40,7 @@ class FoodImageWithActions extends StatelessWidget {
               BlocBuilder<CartItemsCubit, CartItemsState>(
                 builder: (BuildContext context, CartItemsState state) {
                   return ActionIcon(
-                    icon: foodModel.isFavorite
+                    icon: context.read<CartItemsCubit>().isFavourite(foodModel)
                         ? Icons.favorite
                         : Icons.favorite_border_outlined,
                     onPressed: () {
